@@ -1,20 +1,25 @@
-<%- include("header") -%>
+<%- include("header"); -%>
 
 <div class="box" id="heading">
-    <h1><%=dayH%></h1>
+    <h1><%=listNameH%></h1>
 </div>
 
 <div class="box">
 
-    <% for(var i=0;i< newItemsH.length;i++) {%>
-    <div class="item">
-        <input type="checkbox">
-        <p><%=newItemsH[i]%></p>
-    </div>
-    <% } %>
+    <%newItemsH.forEach(function(item){%>
+    <form action="/delete" method="post">
+        <div class="item">
+            <input type="checkbox" name="checkbox" value="<%=item.id%>" onChange="this.form.submit()">
+            <p><%=item.name%></p>
+        </div>
+        <input type="hidden" name="list" value="<%=listNameH%>"></input>
+    </form>
+    <% }) %>
+
     <form class="item" action="/" method="post">
         <input type="text" name="newTodo" autocomplete="off" placeholder="New Item">
-        <button type="submit" name="list" value=<%=dayH%>>+</button>
+        <button type="submit" name="list" value="<%=listNameH%>">+</button>
     </form>
 </div>
-<%- include("footer") -%>
+
+<%- include("footer"); -%>
