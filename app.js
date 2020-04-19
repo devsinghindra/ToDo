@@ -8,7 +8,9 @@ const app = express();
 // var items = ["Buy Food", "Cook Food", "Eat Food"];
 // var workItems = [];
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", { useNewUrlParser: true, useUnifiedTopology: true });
+const password = "qPqiwx30JMeOf5xA";
+const mongoAtlasUrl = "mongodb+srv://admin-devsinghindra:" + password + "@cluster0-6mebu.mongodb.net/";
+mongoose.connect(mongoAtlasUrl + "todolistDB", { useNewUrlParser: true, useUnifiedTopology: true });
 
 const itemsSchema = new mongoose.Schema({
     name: String
@@ -53,7 +55,7 @@ app.get("/", function (req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("success");
+                    console.log("success in / route");
                 }
             })
             res.redirect("/");
@@ -96,11 +98,11 @@ app.post("/delete", function (req, res) {
     const checkedBoxId = req.body.checkbox;
     const listName = req.body.list;
     if (listName === "Today") {
-        Item.findByIdAndDelete(id, function (err) {
+        Item.findByIdAndDelete(checkedBoxId, function (err) {
             if (err) {
                 console.log(err);
             } else {
-                console.log("deleted item by id " + id);
+                console.log("deleted item by id " + checkedBoxId);
                 res.redirect("/");
             }
         });
@@ -139,4 +141,4 @@ app.get("/:customListName", function (req, res) {
 
 app.listen(3000, function () {
     console.log("Server is listening at port 3000");
-}); 
+});
